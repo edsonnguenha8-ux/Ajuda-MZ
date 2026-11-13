@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f5b">
+<title>AJUDA MZ — Encontre profissionais</title>
+<style>
+:root{--green:#087f5b;--dark:#07533e;--mint:#e9f7f1;--ink:#17231f;--muted:#68756f;--line:#e5ece8;--bg:#f7faf8}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;color:var(--green);letter-spacing:-.5px}
+.logo{width:38px;height:38px;border-radius:12px;background:var(--green);color:white;display:grid;place-items:center;font-size:22px}
+.navlinks{display:flex;gap:18px;align-items:center}.navlinks a{color:#405149;text-decoration:none;font-size:14px;font-weight:600}
+button,.btn{border:0;border-radius:10px;background:var(--green);color:white;padding:12px 16px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{background:var(--dark)}.outline{background:white;color:var(--green);border:1px solid #b9d9ca}
+main{max-width:1100px;margin:auto;padding:24px 20px 60px}
+.hero{background:linear-gradient(120deg,#07533e,#0b9168);color:white;border-radius:22px;padding:38px 34px;display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:center;overflow:hidden}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:0 0 14px;letter-spacing:-1.5px}.hero p{font-size:17px;line-height:1.5;color:#e3f5ed;max-width:540px}
+.hero-art{font-size:105px;text-align:center;filter:drop-shadow(0 12px 12px #003d2b55)}
+.search{display:flex;background:white;padding:7px;border-radius:13px;max-width:620px;gap:8px;margin-top:22px}
+.search input{border:0;outline:0;min-width:0;flex:1;padding:10px;font-size:15px}
+.section{margin-top:34px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:16px}
+h2{font-size:23px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin:0}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cat{background:white;border:1px solid var(--line);border-radius:15px;padding:18px 12px;text-align:center;cursor:pointer;transition:.15s}
+.cat:hover,.cat.active{border-color:var(--green);background:var(--mint)}.cat .emoji{font-size:29px;display:block;margin-bottom:9px}.cat strong{font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}
+.person{display:flex;gap:12px;align-items:center}.avatar{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:var(--mint);font-size:25px}
+.card h3{margin:0 0 4px;font-size:16px}.meta{color:var(--muted);font-size:13px}.tag{display:inline-block;background:var(--mint);color:var(--dark);font-size:11px;padding:5px 8px;border-radius:20px;margin-top:12px}
+.card p{font-size:13px;line-height:1.45;color:#526159}.card .btn{font-size:13px;padding:10px 12px;margin-top:7px}
+.callout{margin-top:34px;background:#edf7f2;border:1px solid #d6ebe0;border-radius:18px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.callout h2{margin-bottom:7px}.callout p{margin:0;color:#526159;line-height:1.5}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#10251dcc;z-index:10;padding:18px;overflow:auto}.modal.show{display:grid;place-items:center}
+.dialog{background:white;border-radius:18px;padding:24px;width:min(100%,500px);max-height:92vh;overflow:auto}
+.dialog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.close{background:#edf2ef;color:#26352d;padding:8px 11px}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}input,select,textarea{width:100%;border:1px solid #dce6e0;border-radius:9px;padding:12px;font:inherit;background:white}textarea{min-height:75px;resize:vertical}
+.note{font-size:12px;color:var(--muted);line-height:1.5}.empty{padding:22px;background:white;border:1px dashed #cbd9d1;border-radius:14px;color:var(--muted);text-align:center;grid-column:1/-1}
+@media(max-width:720px){.navlinks a:not(.btn){display:none}.hero{grid-template-columns:1fr;padding:27px 22px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.callout{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <div class="brand"><span class="logo">✚</span> AJUDA MZ</div>
+  <nav class="navlinks"><a href="#categorias">Categorias</a><a href="#profissionais">Profissionais</a><button onclick="openModal('pro')">Oferecer serviços</button></nav>
+</div></header>
+<main>
+<section class="hero">
+ <div><div style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#b8ead4">MATOLA • MAPUTO</div>
+ <h1>Precisa de ajuda?<br>Encontre quem resolve.</h1>
+ <p>Descubra profissionais e serviços perto de si. Ou anuncie o seu trabalho e encontre novos clientes.</p>
+ <div class="search"><input id="searchInput" placeholder="Ex.: eletricista, canalizador..." oninput="renderProfessionals()"><button onclick="document.getElementById('profissionais').scrollIntoView({behavior:'smooth'})">Pesquisar</button></div>
+ </div><div class="hero-art">🧰</div>
+</section>
+<section class="section" id="categorias">
+ <div class="section-head"><div><h2>O que precisa hoje?</h2><p class="sub">Escolha uma categoria para começar</p></div></div>
+ <div class="categories" id="categoryGrid">
+  <div class="cat" onclick="filterCategory('Eletricista',this)"><span class="emoji">💡</span><strong>Eletricistas</strong></div>
+  <div class="cat" onclick="filterCategory('Canalizador',this)"><span class="emoji">🔧</span><strong>Canalizadores</strong></div>
+  <div class="cat" onclick="filterCategory('Pedreiro',this)"><span class="emoji">🧱</span><strong>Pedreiros</strong></div>
+  <div class="cat" onclick="filterCategory('Mecânico',this)"><span class="emoji">🚗</span><strong>Mecânicos</strong></div>
+  <div class="cat" onclick="filterCategory('Limpeza',this)"><span class="emoji">🧹</span><strong>Limpeza</strong></div>
+  <div class="cat" onclick="filterCategory('Explicador',this)"><span class="emoji">📚</span><strong>Explicadores</strong></div>
+  <div class="cat" onclick="filterCategory('Barbeiro',this)"><span class="emoji">💈</span><strong>Barbeiros</strong></div>
+  <div class="cat" onclick="filterCategory('Designer',this)"><span class="emoji">🎨</span><strong>Designers</strong></div>
+ </div>
+</section>
+<section class="section" id="profissionais">
+ <div class="section-head"><div><h2>Profissionais em destaque</h2><p class="sub">Exemplos demonstrativos — ainda não são prestadores verificados</p></div><button class="outline" onclick="clearFilters()">Ver todos</button></div>
+ <div class="cards" id="professionalGrid"></div>
+</section>
+<section class="callout">
+ <div><h2>É profissional?</h2><p>Mostre o seu trabalho, alcance novos clientes e crie oportunidades.</p></div>
+ <button onclick="openModal('pro')">Cadastrar gratuitamente</button>
+</section>
+<section class="callout" style="background:white;border-color:var(--line)">
+ <div><h2>Precisa de um serviço?</h2><p>Conte-nos o que procura. A plataforma está em fase inicial de construção.</p></div>
+ <button class="outline" onclick="openModal('client')">Solicitar serviço</button>
+</section>
+</main>
+<footer>AJUDA MZ © 2026 · Encontre profissionais. Resolva problemas. Ganhe oportunidades.<br><span class="note">Protótipo inicial. Os cadastros e pedidos ainda não são enviados para um servidor.</span></footer>
+
+<div class="modal" id="modal"><div class="dialog">
+ <div class="dialog-head"><h2 id="modalTitle">Cadastro</h2><button class="close" onclick="closeModal()">✕</button></div>
+ <form id="mainForm" onsubmit="submitForm(event)">
+  <div id="formFields"></div>
+  <button style="width:100%;margin-top:18px" type="submit">Enviar demonstração</button>
+  <p class="note">Esta é uma demonstração local. Não introduza dados sensíveis. A informação não será publicada nem enviada.</p>
+ </form>
+ <div id="formResult" class="note" style="display:none;margin-top:14px"></div>
+</div></div>
+<script>
+const demo=[
+ {name:"Exemplo: João",job:"Eletricista",area:"Matola",emoji:"💡",desc:"Instalações e pequenas reparações elétricas."},
+ {name:"Exemplo: Maria",job:"Limpeza",area:"Maputo",emoji:"🧹",desc:"Serviços de limpeza doméstica."},
+ {name:"Exemplo: Carlos",job:"Canalizador",area:"Matola",emoji:"🔧",desc:"Reparação de torneiras e canalização."},
+ {name:"Exemplo: Paulo",job:"Pedreiro",area:"Maputo",emoji:"🧱",desc:"Pequenas obras e acabamentos."},
+ {name:"Exemplo: Ana",job:"Explicador",area:"Matola",emoji:"📚",desc:"Apoio escolar e explicações."},
+ {name:"Exemplo: Luís",job:"Mecânico",area:"Maputo",emoji:"🚗",desc:"Manutenção e diagnóstico automóvel."}
+];
+let selectedCategory="";
+function renderProfessionals(){
+ const q=document.getElementById('searchInput').value.toLowerCase();
+ const filtered=demo.filter(p=>(!selectedCategory||p.job===selectedCategory)&&(!q||(p.job+" "+p.area+" "+p.desc).toLowerCase().includes(q)));
+ const grid=document.getElementById('professionalGrid');
+ grid.innerHTML=filtered.length?filtered.map(p=>`<article class="card"><div class="person"><div class="avatar">${p.emoji}</div><div><h3>${p.name}</h3><div class="meta">${p.job} · ${p.area}</div></div></div><span class="tag">Perfil de demonstração</span><p>${p.desc}</p><button class="outline" onclick="openModal('client','${p.job}')">Tenho interesse</button></article>`).join(''):'<div class="empty">Ainda não há exemplos nesta pesquisa. Experimente outra categoria.</div>';
+}
+function filterCategory(cat,el){selectedCategory=cat;document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderProfessionals();document.getElementById('profissionais').scrollIntoView({behavior:'smooth'});}
+function clearFilters(){selectedCategory="";document.getElementById('searchInput').value="";document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));renderProfessionals();}
+function openModal(type,job=""){
+ document.getElementById('modal').classList.add('show');document.getElementById('formResult').style.display='none';
+ const fields=document.getElementById('formFields');
+ if(type==='pro'){document.getElementById('modalTitle').textContent='Quero oferecer serviços';fields.innerHTML=`
+ <label>Nome</label><input required placeholder="O seu nome">
+ <label>Contacto telefónico</label><input required type="tel" placeholder="O seu número de telefone">
+ <label>Profissão / serviço</label><select required><option value="">Escolha uma categoria</option>${['Eletricista','Canalizador','Pedreiro','Mecânico','Limpeza','Explicador','Barbeiro','Designer','Outro'].map(x=>`<option>${x}</option>`).join('')}</select>
+ <label>Localização</label><select required><option value="">Escolha</option><option>Matola</option><option>Cidade de Maputo</option></select>
+ <label>Descrição dos serviços</label><textarea placeholder="Conte um pouco sobre o seu trabalho"></textarea>`;}
+ else{document.getElementById('modalTitle').textContent='Solicitar um serviço';fields.innerHTML=`
+ <label>Nome</label><input required placeholder="O seu nome">
+ <label>Contacto telefónico</label><input required type="tel" placeholder="O seu número de telefone">
+ <label>Serviço pretendido</label><input required value="${job}" placeholder="Que serviço procura?">
+ <label>Localização</label><select required><option value="">Escolha</option><option>Matola</option><option>Cidade de Maputo</option></select>
+ <label>Descreva o que precisa</label><textarea required placeholder="Explique brevemente o serviço"></textarea>`;}
+}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function submitForm(e){e.preventDefault();document.getElementById('formResult').style.display='block';document.getElementById('formResult').textContent='Demonstração concluída! Nesta versão de teste, os dados não são guardados nem enviados. Na próxima etapa vamos ligar os formulários a uma base de dados segura.';e.target.querySelector('button[type=submit]').textContent='Demonstração concluída';}
+renderProfessionals();
+</script>
+</body></html>
